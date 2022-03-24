@@ -1,0 +1,46 @@
+{
+  "name": "utf16le-encoding",
+  "description": "UTF16-le encoding, a.k.a. UCS2 encoding, an encoding you probably should never use.",
+  "version": "1.0.0",
+  "main": "dist/node.js",
+  "types": "dist/node.d.ts",
+  "exports": {
+    "node": "./dist/node.js",
+    "default": "./dist/browser.js"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "compile": "tsc --skipLibCheck",
+    "compile:watch": "tsc --skipLibCheck --watch",
+    "test": "fava",
+    "test:watch": "fava -w",
+    "prepublishOnly": "npm run clean && npm run compile && npm run test"
+  },
+  "bugs": {
+    "url": "https://github.com/fabiospampinato/utf16le-encoding/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Fabio Spampinato",
+    "email": "spampinabio@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabiospampinato/utf16le-encoding.git"
+  },
+  "keywords": [
+    "utf16",
+    "utf16le",
+    "ucs2",
+    "ucs-2",
+    "encoding"
+  ],
+  "devDependencies": {
+    "@types/node": "^17.0.23",
+    "fast-check": "^2.23.2",
+    "fava": "^0.0.5",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.2",
+    "uint8-encoding": "^1.0.0"
+  }
+}
