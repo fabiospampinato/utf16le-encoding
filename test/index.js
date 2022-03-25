@@ -18,6 +18,12 @@ const evenize = uint8 => {
 
 describe ( 'UTF16le', it => {
 
+  it ( 'returns an actual Uint8Array', t => {
+
+    t.is ( UTF16le.decode ( 'foo' ).constructor, Uint8Array );
+
+  });
+
   it ( 'works with Uint8Arrays', t => {
 
     const encoder = new TextEncoder ();
