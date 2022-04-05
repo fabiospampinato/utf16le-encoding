@@ -43,7 +43,6 @@ const Browser = {
 
 };
 
-
 /* EXPORT */
 
 export default Browser;

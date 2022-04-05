@@ -1,12 +1,13 @@
 
 /* IMPORT */
 
-const {Buffer} = require ( 'buffer' );
-const fc = require ( 'fast-check' );
-const {describe} = require ( 'fava' );
-const U8 = require ( 'uint8-encoding' );
-const {default: UTF16le} = require ( '../dist/node' );
-const Fixtures = require ( './fixtures' );
+import fc from 'fast-check';
+import {describe} from 'fava';
+import {Buffer} from 'node:buffer';
+import U8 from 'uint8-encoding';
+import UTF16leBrowser from '../dist/browser.js';
+import UTF16leNode from '../dist/node.js';
+import Fixtures from './fixtures.js';
 
 /* HELPERS */
 
@@ -16,56 +17,64 @@ const evenize = uint8 => {
 
 /* MAIN */
 
-describe ( 'UTF16le', it => {
+describe ( 'UTF16le', () => {
 
-  it ( 'returns an actual Uint8Array', t => {
+  for ( const [UTF16le, name] of [[UTF16leBrowser, 'browser'], [UTF16leNode, 'node']] ) {
 
-    t.is ( UTF16le.decode ( 'foo' ).constructor, Uint8Array );
+    describe ( name, it => {
 
-  });
+      it ( 'returns an actual Uint8Array', t => {
 
-  it ( 'works with Uint8Arrays', t => {
+        t.is ( UTF16le.decode ( 'foo' ).constructor, Uint8Array );
 
-    const encoder = new TextEncoder ();
+      });
 
-    for ( const fixture of Fixtures ) {
+      it ( 'works with Uint8Arrays', t => {
 
-      const fixtureU8 = evenize ( encoder.encode ( fixture ) );
+        const encoder = new TextEncoder ();
 
-      const encoded = UTF16le.encode ( fixtureU8 );
-      const decoded = UTF16le.decode ( encoded );
+        for ( const fixture of Fixtures ) {
 
-      t.deepEqual ( decoded, fixtureU8 );
+          const fixtureU8 = evenize ( encoder.encode ( fixture ) );
 
-    }
+          const encoded = UTF16le.encode ( fixtureU8 );
+          const decoded = UTF16le.decode ( encoded );
 
-  });
+          t.deepEqual ( decoded, fixtureU8 );
 
-  it ( 'works with fc-generated codepoints', t => {
+        }
 
-    const assert = str => t.deepEqual ( UTF16le.decode ( UTF16le.encode ( evenize ( U8.encode ( str ) ) ) ), evenize ( U8.encode ( str ) ) );
-    const property = fc.property ( fc.fullUnicode (), assert );
+      });
 
-    fc.assert ( property, { numRuns: 1000000 } );
+      it ( 'works with fc-generated codepoints', t => {
 
-  });
+        const assert = str => t.deepEqual ( UTF16le.decode ( UTF16le.encode ( evenize ( U8.encode ( str ) ) ) ), evenize ( U8.encode ( str ) ) );
+        const property = fc.property ( fc.fullUnicode (), assert );
 
-  it ( 'works with fc-generated strings', t => {
+        fc.assert ( property, { numRuns: 1000000 } );
 
-    const assert = str => t.deepEqual ( UTF16le.decode ( UTF16le.encode ( evenize ( U8.encode ( str ) ) ) ), evenize ( U8.encode ( str ) ) );
-    const property = fc.property ( fc.fullUnicodeString (), assert );
+      });
 
-    fc.assert ( property, { numRuns: 1000000 } );
+      it ( 'works with fc-generated strings', t => {
 
-  });
+        const assert = str => t.deepEqual ( UTF16le.decode ( UTF16le.encode ( evenize ( U8.encode ( str ) ) ) ), evenize ( U8.encode ( str ) ) );
+        const property = fc.property ( fc.fullUnicodeString (), assert );
 
-  it ( 'works like Buffer', t => {
+        fc.assert ( property, { numRuns: 1000000 } );
 
-    const assert = str => t.is ( UTF16le.encode ( evenize ( U8.encode ( str ) ) ), Buffer.from ( evenize ( U8.encode ( str ) ) ).toString ( 'utf16le' ) );
-    const property = fc.property ( fc.fullUnicodeString (), assert );
+      });
 
-    fc.assert ( property, { numRuns: 1000000 } );
+      it ( 'works like Buffer', t => {
 
-  });
+        const assert = str => t.is ( UTF16le.encode ( evenize ( U8.encode ( str ) ) ), Buffer.from ( evenize ( U8.encode ( str ) ) ).toString ( 'utf16le' ) );
+        const property = fc.property ( fc.fullUnicodeString (), assert );
+
+        fc.assert ( property, { numRuns: 1000000 } );
+
+      });
+
+    });
+
+  }
 
 });

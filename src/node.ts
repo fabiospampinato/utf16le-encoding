@@ -1,4 +1,8 @@
 
+/* IMPORT */
+
+import {Buffer} from 'node:buffer';
+
 /* MAIN */
 
 const Node = {
