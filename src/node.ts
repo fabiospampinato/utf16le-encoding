@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import {Buffer} from 'node:buffer';
+import Buffer from 'node-buffer-encoding';
 
 /* MAIN */
 
@@ -11,15 +11,13 @@ const Node = {
 
   encode: ( data: Uint8Array ): string => {
 
-    return Buffer.from ( data ).toString ( 'utf16le' );
+    return Buffer.encode ( data, 'utf16le' );
 
   },
 
   decode: ( data: string ): Uint8Array => {
 
-    const buffer = Buffer.from ( data, 'utf16le' );
-
-    return new Uint8Array ( buffer.buffer, buffer.byteOffset, buffer.byteLength );
+    return Buffer.decode ( data, 'utf16le' );
 
   }
 
