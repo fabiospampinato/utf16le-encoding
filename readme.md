@@ -5,7 +5,7 @@ UTF16-le encoding, a.k.a. UCS2 encoding, an encoding you probably should never u
 ## Install
 
 ```sh
-npm install --save utf16le-encoding
+npm install utf16le-encoding
 ```
 
 ## Usage
