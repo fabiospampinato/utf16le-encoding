@@ -3,7 +3,7 @@
   "repository": "github:fabiospampinato/utf16le-encoding",
   "description": "UTF16-le encoding, a.k.a. UCS2 encoding, an encoding you probably should never use.",
   "license": "MIT",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "type": "module",
   "main": "dist/node.js",
   "types": "./dist/node.d.ts",
